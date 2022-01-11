@@ -11,17 +11,20 @@ router.route('/todos')
         const {title, date} = req.body;
         const newTodo = new Todo({title, date});
         await newTodo.save();
-        res.json(newTodo)
+        const todoList = await Todo.find({});
+        res.json(todoList);
     })
     .patch(async(req,res)=>{
-        const {id, title, date} = req.body;
+        const {title, id, date} = req.body;
         const updatedTodo = await Todo.findByIdAndUpdate(id, {title, date});
-        res.json(updatedTodo);
+        const todoList = await Todo.find({});
+        res.json(todoList);
     })
     .delete(async (req,res)=>{
         const {id} = req.body;
         const deletedTodo = await Todo.findByIdAndDelete(id);
-        res.json(deletedTodo);
+        const todoList = await Todo.find({});
+        res.json(todoList);
     })
 
 module.exports = router;
